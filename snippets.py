@@ -50,7 +50,7 @@ def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
         popup = folium.Popup(iframe) 
         folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
                                      gdf0.loc[idx]['geometry'].x], 
-                                     popup= popup,radius=4,fill=True, weight=4, color=color,fill_color=fillcolor))
+                                     popup= popup,radius=4,fill=True, weight=4, color=color,fill_color=fillcolor, fill_opacity=1))
     return folmap
 
 def add_line_popups(gdf0, folmap, info,color:str='blue'):
