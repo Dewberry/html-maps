@@ -33,7 +33,7 @@ def add_tiles(folmap):
     folium.LayerControl().add_to(folmap)
     return folmap
 
-def add_point_popups(gdf0, folmap, info):
+def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
     sID='Hi'
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
@@ -50,10 +50,10 @@ def add_point_popups(gdf0, folmap, info):
         popup = folium.Popup(iframe) 
         folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
                                      gdf0.loc[idx]['geometry'].x], 
-                                     popup= popup,radius=4, weight=4, color='red'))
+                                     popup= popup,radius=4,fill=True, weight=4, color=color,fill_color=fillcolor))
     return folmap
 
-def add_line_popups(gdf0, folmap, info):
+def add_line_popups(gdf0, folmap, info,color:str='blue'):
     sID='Hi'
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
@@ -71,11 +71,11 @@ def add_line_popups(gdf0, folmap, info):
             x = line.coords.xy[0]
             y = line.coords.xy[1]
             line_points = zip(y,x)
-            folium.PolyLine(list(line_points),popup= popup, color='blue').add_to(folmap)
+            folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
     return folmap
 
 
-def add_poly_popups(gdf0, folmap, info):
+def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
     sID='Hi'
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
@@ -94,7 +94,7 @@ def add_poly_popups(gdf0, folmap, info):
         #    y = poly.exterior.coords.xy[1]
         #    line_points = zip(y,x)
         #    print(list(line_points))
-        style_function = lambda x :{'fillColor': '#a6a6a6','color': 'black','opacity':0.1,'fillOpacity': 0.01}
+        style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.1,'fillOpacity': 0.01}
         geojson = folium.GeoJson(gdf0,style_function=style_function)
         geojson.add_child(popup)
         geojson.add_to(folmap)
