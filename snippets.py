@@ -10,7 +10,8 @@ from folium.plugins import MeasureControl
 from IPython.display import HTML, display
 from shapely.geometry import  MultiLineString, mapping, shape
 from shapely.ops import linemerge
-    
+from folium.plugins import MeasureControl
+
 def quick_transform(vector, incrs):
     vector.crs = incrs
     return vector.to_crs({'init': 'epsg:4326'})
@@ -97,13 +98,12 @@ def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
                 html_string +=add_data
         iframe=branca.element.IFrame(html=html_string, width=200, height=62*box)    
         popup = folium.Popup(iframe)
-        #for poly in gdf0.geometry[idx]:
-        #    x = poly.exterior.coords.xy[0]
-        #    y = poly.exterior.coords.xy[1]
-        #    line_points = zip(y,x)
-        #    print(list(line_points))
         style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.1,'fillOpacity': 0.01}
         geojson = folium.GeoJson(gdf0,name=name,style_function=style_function)
         geojson.add_child(popup)
         geojson.add_to(folmap)
+    return folmap
+
+def add_measure(folmap):
+    folmap.add_child(MeasureControl())
     return folmap
