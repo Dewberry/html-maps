@@ -71,7 +71,31 @@ def add_line_popups(gdf0, folmap, info):
             x = line.coords.xy[0]
             y = line.coords.xy[1]
             line_points = zip(y,x)
-            folium.PolyLine(list(line_points),popup= popup, color='black').add_to(folmap)
+            folium.PolyLine(list(line_points),popup= popup, color='blue').add_to(folmap)
     return folmap
 
 
+def add_poly_popups(gdf0, folmap, info):
+    sID='Hi'
+    for idx in  gdf0.index:
+        html_string = f"<h4>{sID}</h4>"
+        
+        for k, v in info.items():
+            if k == 'URL':
+                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >USGS Webpage   </a>'
+                html_string +=add_data
+            else:
+                add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
+                html_string +=add_data
+        iframe=branca.element.IFrame(html=html_string, width=200, height=250)    
+        popup = folium.Popup(iframe)
+        #for poly in gdf0.geometry[idx]:
+        #    x = poly.exterior.coords.xy[0]
+        #    y = poly.exterior.coords.xy[1]
+        #    line_points = zip(y,x)
+        #    print(list(line_points))
+        style_function = lambda x :{'fillColor': '#a6a6a6','color': 'black','opacity':0.1,'fillOpacity': 0.01}
+        geojson = folium.GeoJson(gdf0,style_function=style_function)
+        geojson.add_child(popup)
+        geojson.add_to(folmap)
+    return folmap
