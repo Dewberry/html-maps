@@ -77,12 +77,17 @@ def add_line_popups(gdf0, folmap, info,color:str='blue'):
 
 def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
     sID='Hi'
+    name = None
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
         for k, v in info.items():
             if k == 'URL':
                 add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >USGS Webpage   </a>'
+                html_string +=add_data
+            elif k == 'Label':
+                name = gdf0.loc[idx][v]
+                add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
                 html_string +=add_data
             else:
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
@@ -95,7 +100,7 @@ def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
         #    line_points = zip(y,x)
         #    print(list(line_points))
         style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.1,'fillOpacity': 0.01}
-        geojson = folium.GeoJson(gdf0,style_function=style_function)
+        geojson = folium.GeoJson(gdf0,name=name,style_function=style_function)
         geojson.add_child(popup)
         geojson.add_to(folmap)
     return folmap
