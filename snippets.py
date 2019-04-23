@@ -35,6 +35,7 @@ def add_tiles(folmap):
 
 def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
     sID='Hi'
+    box = len(info)+1
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
@@ -46,7 +47,7 @@ def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
                 html_string +=add_data
 
-        iframe=branca.element.IFrame(html=html_string, width=200, height=250)    
+        iframe=branca.element.IFrame(html=html_string, width=200, height=55*box)    
         popup = folium.Popup(iframe) 
         folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
                                      gdf0.loc[idx]['geometry'].x], 
@@ -55,6 +56,7 @@ def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
 
 def add_line_popups(gdf0, folmap, info,color:str='blue'):
     sID='Hi'
+    box = len(info)+1
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
@@ -65,7 +67,7 @@ def add_line_popups(gdf0, folmap, info,color:str='blue'):
             else:
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
                 html_string +=add_data
-        iframe=branca.element.IFrame(html=html_string, width=200, height=250)    
+        iframe=branca.element.IFrame(html=html_string, width=200, height=55*box)    
         popup = folium.Popup(iframe)
         for line in gdf0.geometry[idx]:
             x = line.coords.xy[0]
@@ -78,6 +80,7 @@ def add_line_popups(gdf0, folmap, info,color:str='blue'):
 def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
     sID='Hi'
     name = None
+    box = len(info)-1
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
@@ -92,7 +95,7 @@ def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
             else:
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
                 html_string +=add_data
-        iframe=branca.element.IFrame(html=html_string, width=200, height=250)    
+        iframe=branca.element.IFrame(html=html_string, width=200, height=62*box)    
         popup = folium.Popup(iframe)
         #for poly in gdf0.geometry[idx]:
         #    x = poly.exterior.coords.xy[0]
