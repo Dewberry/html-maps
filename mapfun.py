@@ -22,7 +22,7 @@ def get_centroid(vector):
     ypoints = [float(v.y) for v in geom]
     return np.mean(xpoints), np.mean(ypoints)
 
-def interactive_map(centery, centerx, zoom = 7):
+def interactive_map(centery, centerx, zoom = 10):
     folmap = folium.Map(location=[centery, centerx], zoom_start=zoom) 
     return folmap
 
@@ -34,36 +34,36 @@ def add_tiles(folmap):
     folium.LayerControl().add_to(folmap)
     return folmap
 
-def add_point_popups(gdf0, folmap, info,color:str='red',fillcolor:str='red'):
-    sID='Hi'
+def add_point_popups(gdf0, folmap, info, name, color:str='red',fillcolor:str='red'):
+    sID=name
     box = len(info)+1
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
         for k, v in info.items():
             if k == 'URL':
-                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >USGS Webpage   </a>'
+                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >Online Data</a>'
                 html_string +=add_data
             else:
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
                 html_string +=add_data
 
-        iframe=branca.element.IFrame(html=html_string, width=200, height=55*box)    
+        iframe=branca.element.IFrame(html=html_string, width=300, height=40*box)    
         popup = folium.Popup(iframe) 
         folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
                                      gdf0.loc[idx]['geometry'].x], 
-                                     popup= popup,radius=4,fill=True, weight=4, color=color,fill_color=fillcolor, fill_opacity=1))
+                                     popup= popup,radius=4, fill=True, weight=4, color=color,fill_color=fillcolor, fill_opacity=1))
     return folmap
 
-def add_line_popups(gdf0, folmap, info,color:str='blue'):
-    sID='Hi'
+def add_line_popups(gdf0, folmap, info, name, color:str='blue'):
+    sID=name
     box = len(info)+1
     for idx in  gdf0.index:
         html_string = f"<h4>{sID}</h4>"
         
         for k, v in info.items():
             if k == 'URL':
-                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >USGS Webpage   </a>'
+                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >Online Data</a>'
                 html_string +=add_data
             else:
                 add_data = f"<p>{k} {gdf0.loc[idx][v]}</p>"
@@ -78,8 +78,8 @@ def add_line_popups(gdf0, folmap, info,color:str='blue'):
     return folmap
 
 
-def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
-    sID='Hi'
+def add_poly_popups(gdf0, folmap, info, name, color:str='black',fillcolor:str='black'):
+    sID=name
     name = None
     box = len(info)-1
     for idx in  gdf0.index:
@@ -87,7 +87,7 @@ def add_poly_popups(gdf0, folmap, info,color:str='black',fillcolor:str='black'):
         
         for k, v in info.items():
             if k == 'URL':
-                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >USGS Webpage   </a>'
+                add_data = f'<a href={gdf0.loc[idx][v]} target="_blank" >Online Data</a>'
                 html_string +=add_data
             elif k == 'Label':
                 name = gdf0.loc[idx][v]
