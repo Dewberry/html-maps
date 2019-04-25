@@ -71,11 +71,14 @@ def add_line_popups(gdf0, folmap, info, name, color:str='blue'):
                 
         iframe=branca.element.IFrame(html=html_string, width=200, height=55*box)    
         popup = folium.Popup(iframe)
-        for line in gdf0.geometry[idx]:
-            x = line.coords.xy[0]
-            y = line.coords.xy[1]
-            line_points = zip(y,x)
-            folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
+        
+        geometry =  gdf0.loc[idx].geometry
+        assert geometry.type  != 'MultiLineString', "MultiLineString in dataset, convert to line in GIS before continuing"
+
+        x = geometry.coords.xy[0]
+        y = geometry.coords.xy[1]
+        line_points = zip(y,x)
+        folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
     return folmap
 
 
