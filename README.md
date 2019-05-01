@@ -9,4 +9,4 @@
 
 **Example for a created map:** 
 
-![Example_screenshot](https://github.com/Dewberry/html-maps/blob/docs/images/example_screenshot.PNG)
+![Example_screenshot](https://github.com/Dewberry/html-maps/blob/docs/docs/images/example_screenshot.PNG)
