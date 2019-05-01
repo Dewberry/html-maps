@@ -7,4 +7,5 @@
 1. HTML file for the created map. 
 2. Jupyter notebook created specifically for the desired study domain to regenerate and/or modify the map if needed. 
 
+**An Example for a created map:** 
 ![Example_screenshot](https://github.com/Dewberry/html-maps/blob/docs/images/example_screenshot.PNG)
