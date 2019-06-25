@@ -30,8 +30,7 @@ def interactive_map(centery, centerx, zoom = 10):
 def add_tiles(folmap): 
     EsriImagery = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
     EsriAttribution = "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-    folmap.add_tile_layer(tiles=EsriImagery, attr=EsriAttribution, name='EsriImagery')
-    folium.LayerControl().add_to(folmap)
+    folium.TileLayer(tiles=EsriImagery, attr=EsriAttribution, name='EsriImagery').add_to(folmap)
     return folmap
 
 def add_point_popups(gdf0, folmap, info, name, color:str='red',fillcolor:str='red'):
