@@ -2,7 +2,10 @@ import HTML
 import pandas as pd
 import pathlib as pl
 import folium 
-
+'''
+The table functions below utilize the HTML.py(v0.04 2009-07-28 Philippe Lagadec)
+script to auto generate HTML tables.
+'''
 
 def column_styles(col_num,headers:list=[''],size:str='40%',col_align:str\
 					='center',col_font:str='font-size: medium'):
