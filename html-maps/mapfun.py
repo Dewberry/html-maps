@@ -35,8 +35,12 @@ def add_tiles(folmap, tile_type:str='World_Imagery', services:str=''):
     inputs
         folmap = intitialized interactive map
         Defaults:
-            - tile type = esri tile layer name (World_Imagery USA_Topo_Maps World_Shaded_Relief World_Street_Map)
-            - services  = access service sub dir or choose other ones (/Canvas,/Elevation,/Ocean, /Polar, etc)
+            - tile type = esri tile layer name (World_Imagery, USA_Topo_Maps, World_Shaded_Relief,
+                                                World_Street_Map)
+            - services  = access service sub dir or choose other ones (/Canvas,/Elevation,/Ocean,
+                                                                        /Polar, etc)
+            *note*  : if you change services then the tile needs to be changed according to the service
+                        you want.
     '''
     EsriImagery = "https://server.arcgisonline.com/ArcGIS/rest/services"\
                 f"{services}/{tile_type}/MapServer/"\
