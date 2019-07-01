@@ -8,7 +8,7 @@ script to auto generate HTML tables.
 '''
 
 def column_styles(col_num,headers:list=[''],size:str='40%',col_align:str\
-					='center',col_font:str='font-size: medium'):
+					='center',col_font:str='font-size: medium') -> dict:
     '''
     This will attribute the table n amount of columns with uniform width,
     alignment, and fontsize
@@ -29,12 +29,13 @@ def column_styles(col_num,headers:list=[''],size:str='40%',col_align:str\
         align.append(col_align)
         font.append(col_font)
 
-    params = {'headers':headers,'column_number':col_num,'column_width':width,'column_align':align,'column_font':font}
+    params = {'headers':headers,'column_number':col_num,'column_width':width,\
+				'column_align':align,'column_font':font}
 
     return params
 
 def table_description(table:pd.DataFrame, params:dict, \
-	row_headers:dict, head_style:str, change_header:bool=True):
+	row_headers:dict, head_style:str, change_header:bool=True) -> str:
 	'''
 	 auto generates a html table
 	 inputs 
@@ -61,7 +62,7 @@ def table_description(table:pd.DataFrame, params:dict, \
 
 	return htmlcode
 
-def header_style(html_table,header_style,style:bool=True):
+def header_style(html_table,header_style,style:bool=True) -> str:
     '''
     add font, alignment styles to table headers
     '''
