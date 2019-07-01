@@ -11,6 +11,8 @@ from IPython.display import HTML, display
 from shapely.geometry import  MultiLineString, mapping, shape
 from shapely.ops import linemerge
 from folium.plugins import MeasureControl
+import matplotlib as mpl
+from matplotlib import cm
 
 def quick_transform(vector, incrs):
     vector.crs = incrs
@@ -27,11 +29,48 @@ def interactive_map(centery, centerx, zoom = 10):
     return folmap
 
     
-def add_tiles(folmap): 
-    EsriImagery = "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}"
-    EsriAttribution = "Tiles &copy; Esri &mdash; Source: Esri, i-cubed, USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP, UPR-EGP, and the GIS User Community"
-    folmap.add_tile_layer(tiles=EsriImagery, attr=EsriAttribution, name='EsriImagery')
-    folium.LayerControl().add_to(folmap)
+def add_tiles(folmap, tile_type:str='World_Imagery', services:str=''):
+    '''
+    add different tiles to the interactive map
+    inputs
+        folmap = intitialized interactive map
+        Defaults:
+            - tile type = esri tile layer name (World_Imagery USA_Topo_Maps World_Shaded_Relief World_Street_Map)
+            - services  = access service sub dir or choose other ones (/Canvas,/Elevation,/Ocean, /Polar, etc)
+    '''
+    EsriImagery = "https://server.arcgisonline.com/ArcGIS/rest/services"\
+                f"{services}/{tile_type}/MapServer/"\
+                "tile/{z}/{y}/{x}"
+    EsriAttribution = "Tiles &copy; Esri &mdash; Source: Esri, i-cubed,"\
+                " USDA, USGS, AEX, GeoEye, Getmapping, Aerogrid, IGN, IGP"\
+                ", UPR-EGP, and the GIS User Community"
+    folium.TileLayer(tiles=EsriImagery, attr=EsriAttribution, name=tile_type).add_to(folmap)
+
+    return folmap
+
+def add_points_popup_table(latitude,longitude,elevation,folmap,\
+    table_description:list, color:bool = True):
+    '''
+     adds point popups to folium map
+     inputs:
+        latitude:           list of y locations
+        longitude:          list of x locations
+        elevations:         list of z values
+        table_description:  adds descriptions in table format 
+                            to points
+        folmap:             initialized interactive map 
+    '''
+    
+    data = list(elevation)
+    if color:
+        colors = colormap(data)
+    else:
+        colors = '#0066ff'
+    for i in range(len(data)):
+        folmap.add_child(folium.CircleMarker(location=[latitude[i],longitude[i]],radius=7,
+                                        popup= table_description[i],
+                                        weight=3, fill=True, color=mpl.colors.to_hex(colors[i]),
+                                        fill_color=mpl.colors.to_hex(colors[i]), fill_opacity=1))
     return folmap
 
 def add_point_popups(gdf0, folmap, info, name, color:str='red',fillcolor:str='red'):
@@ -111,6 +150,34 @@ def add_poly_popups(gdf0, folmap, info, name, color:str='black', fillcolor:str='
 
     return folmap
 
-def add_measure(folmap):
+def add_extra(folmap):
+    folium.LayerControl().add_to(folmap)
     folmap.add_child(MeasureControl())
+    return folmap
+
+
+
+#---------- extra attribute functions that support the functions above---------------
+
+def colormap(data, cmap_type:str='jet', vmin=0):
+    # calculates colors based on the data and cmap
+    cmap = cm.get_cmap(cmap_type)  
+    normalize = mpl.colors.Normalize(vmin=vmin, vmax=max(data))
+    colors = [cmap(normalize(value)) for value in data]
+    
+    return colors
+
+def colors():
+    colors = ['#8000FF','#5500FF','#4000FF','#1500FF','#0000FF','#002AFF','#0055FF',
+    '#0080FF','#00AAFF','#00D4FF','#00FFFF','#00FFAA','#00FF80','#00FF2A','#2AFF00',
+    '#80FF00','#AAFF00','#D4FF00','#FFFF00','#FFD400','#FFAA00','#FF8000','#FF6A00',
+    '#FF4000','#FF2A00','#FF1500','#FF0000']
+    return colors
+
+def add_cbar(data,folmap,caption:str='HWM(ft) above NAVD88', vmin=0):
+    # adds a colorbar to a folium map
+    colormap = branca.colormap.StepColormap(colors=colors(),vmin=vmin,vmax=np.max(round(data,1)))
+    colormap.caption = caption
+    colormap.add_to(folmap)
+
     return folmap
