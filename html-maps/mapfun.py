@@ -157,7 +157,7 @@ def add_poly_popups(gdf0, folmap, info, name, color:str='black', fillcolor:str='
 
     return folmap
 
-def add_line_tables(gdf0, folmap, info, name, color:str='blue'):
+def add_line_tables(gdf0, folmap, info, name, color:str='blue',fillcolor:str='blue'):
     sID=name
 
     for idx in  gdf0.index:
@@ -171,8 +171,10 @@ def add_line_tables(gdf0, folmap, info, name, color:str='blue'):
 
         x = geometry.coords.xy[0]
         y = geometry.coords.xy[1]
+        style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.6,'fillOpacity': 0.4}
         line_points = zip(y,x)
-        folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
+        geojson = folium.GeoJson(gdf0.geometry[idx],name=name[idx],style_function=style_function).add_to(folmap)
+        geojson.add_child(popup)
     return folmap
 
 def add_point_tables(gdf0, folmap, info, name, color:str='red',fillcolor:str='red'):
