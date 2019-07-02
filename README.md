@@ -1,6 +1,6 @@
 # HTML-Maps
 #### Description:
-+ Make interactive, lightweight HTML maps using leaflet to share geospatial data. Currently, this map is used to visualize USGS gauges, HUCs, and stream flowlines for specific study domain.
++ Make interactive, lightweight HTML maps using leaflet to share geospatial data. The example below visualizes USGS gauges, HUCs, and stream flowlines for specific study domain.
 
 #### Documentation:     
 [Read the Docs](docs/index.md)
