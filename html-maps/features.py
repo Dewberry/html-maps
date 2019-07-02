@@ -1,7 +1,11 @@
+
+
+
 import HTML
 import pandas as pd
 import pathlib as pl
 import folium 
+
 '''
 The table functions below utilize the HTML.py(v0.04 2009-07-28 Philippe Lagadec)
 script to auto generate HTML tables.
@@ -35,7 +39,8 @@ def column_styles(col_num,headers:list=[''],size:str='40%',col_align:str\
     return params
 
 def table_description(table:pd.DataFrame, params:dict, \
-	row_headers:dict, head_style:str, change_header:bool=True) -> str:
+	row_headers:dict, head_style:str, title:str, 
+	change_header:bool=True,add_title:bool=True) -> str:
 	'''
 	 auto generates a html table
 	 inputs 
@@ -48,7 +53,9 @@ def table_description(table:pd.DataFrame, params:dict, \
 		head_style:			this will add styles to the table header 
 							(ex. <TH style="font-size:10pt;text-align:center">)
 		change_header:		Bool. do you want to add styles to the headers.
+		title 				string. (ex. <caption>TITLE</caption><TR>)
 	'''
+
 	keys = list(params.keys())
 	htmlcode = []
 	for i in table.index:
@@ -57,10 +64,38 @@ def table_description(table:pd.DataFrame, params:dict, \
 						col_align=params[keys[3]],
 						col_styles=params[keys[4]])
 		for row in row_headers.keys():
-			t.rows.append([row,str(table[row_headers[row]][i])])
-		htmlcode.append(header_style(str(t),head_style,style=change_header))
+			if row == 'URL':
+				t.rows.append([row_headers[row],str2url(table[row_headers[row]][i])])
+			else:
+				t.rows.append([row,str(table[row_headers[row]][i])])
+		info = header_style(str(t),head_style,style=change_header)
+		if add_title:
+			info = table_title(info,title)
+		else:
+			pass
+		htmlcode.append(info)
 
 	return htmlcode
+
+def text_table(text,params):
+	'''
+	 auto generates a html table
+	 inputs 
+	 	text: 				any type of string
+	 	params: 			is a dictionary from the column style function,
+ 							a dictionary of row headers (following usgs website
+ 							https://stn.wim.usgs.gov/fev/#MatthewOctober2016)
+	'''
+	t = HTML.Table()
+	t.rows.append(['Description',text])
+	htmlcode = str(t)
+
+	return htmlcode	
+
+
+
+#--------------------Support function below --------------------------------
+
 
 def header_style(html_table,header_style,style:bool=True) -> str:
     '''
@@ -72,4 +107,33 @@ def header_style(html_table,header_style,style:bool=True) -> str:
         pass
     return html_table
 
+def table_title(html_table:str,title:str):
+	'''
+	add title to html table
+	inputs
+		html_table		string of html formatted table
+		title 			string. (ex. <caption>TITLE</caption><TR>)
+	'''
+	html_table = html_table.replace('<TH>',title,1)
+	return html_table
+
+
+def find_all(string,substring):
+    """
+    Function: Returning all the index of substring in a string
+    Arguments: String and the search string
+    Return:Returning a list
+    """
+    length = len(substring)
+    c=0
+    indexes = []
+    while c < len(string):
+        if string[c:c+length] == substring:
+            indexes.append(c)
+        c=c+1
+    return indexes
+
+def str2url(info):
+	add_data = f'<a href={info} target="_blank" >Online Data</a>'
+	return add_data
 

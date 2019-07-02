@@ -13,6 +13,7 @@ from shapely.ops import linemerge
 from folium.plugins import MeasureControl
 import matplotlib as mpl
 from matplotlib import cm
+from features import *
 
 def quick_transform(vector, incrs):
     vector.crs = incrs
@@ -95,7 +96,8 @@ def add_point_popups(gdf0, folmap, info, name, color:str='red',fillcolor:str='re
         popup = folium.Popup(iframe) 
         folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
                                      gdf0.loc[idx]['geometry'].x], 
-                                     popup= popup,radius=4, fill=True, weight=4, color=color,fill_color=fillcolor, fill_opacity=1))
+                                     popup= popup,radius=4, fill=True, weight=4,
+                                      color=color,fill_color=fillcolor, fill_opacity=1))
     return folmap
 
 def add_line_popups(gdf0, folmap, info, name, color:str='blue'):
@@ -149,10 +151,75 @@ def add_poly_popups(gdf0, folmap, info, name, color:str='black', fillcolor:str='
         iframe=branca.element.IFrame(html=html_string, width=200, height=62*box)    
         popup = folium.Popup(iframe)
         style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.6,'fillOpacity': 0.4}
+        
         geojson = folium.GeoJson(gdf0.geometry[idx],name=name,style_function=style_function).add_to(folmap)
         geojson.add_child(popup)
 
     return folmap
+
+def add_line_tables(gdf0, folmap, info, name, color:str='blue'):
+    sID=name
+
+    for idx in  gdf0.index:
+
+        iframe=branca.element.IFrame(html=info[idx], width=box_width(info[idx]), 
+                                    height=box_height(info[idx]))  
+        popup = folium.Popup(iframe)
+        
+        geometry =  gdf0.loc[idx].geometry
+        assert geometry.type  != 'MultiLineString', "MultiLineString in dataset, convert to line in GIS before continuing"
+
+        x = geometry.coords.xy[0]
+        y = geometry.coords.xy[1]
+        line_points = zip(y,x)
+        folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
+    return folmap
+
+def add_point_tables(gdf0, folmap, info, name, color:str='red',fillcolor:str='red'):
+    sID=name
+    for idx in  gdf0.index:
+
+
+        iframe=branca.element.IFrame(html=info[idx], width=box_width(info[idx]), 
+                                    height=box_height(info[idx]))   
+        popup = folium.Popup(iframe) 
+        folmap.add_child(folium.CircleMarker(location=[gdf0.loc[idx]['geometry'].y, 
+                                     gdf0.loc[idx]['geometry'].x], 
+                                     popup= popup,radius=4, fill=True, weight=4,
+                                      color=color,fill_color=fillcolor, fill_opacity=1))
+    return folmap
+
+def add_poly_table(gdf0, folmap, info, name, color:str='black', fillcolor:str='black'):
+    sID=name
+
+
+    for idx in  gdf0.index:
+        iframe=branca.element.IFrame(html=info[idx], width=box_width(info[idx]), 
+                                    height=box_height(info[idx]))    
+        popup = folium.Popup(iframe)
+        style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.6,'fillOpacity': 0.4}
+        
+        geojson = folium.GeoJson(gdf0.geometry[idx],name=name,style_function=style_function).add_to(folmap)
+        geojson.add_child(popup)
+
+    return folmap
+
+def add_multiline(gdf0, folmap, info, name, color:str='blue'):
+    sID=name
+    box = len(info)+1
+    for idx in  gdf0.index:
+        
+                
+        iframe=branca.element.IFrame(html=info[idx], width=box_width(info[idx]), 
+                                    height=box_height(info[idx]))  
+        popup = folium.Popup(iframe)
+        for line in gdf0.geometry[idx]:
+            x = line.coords.xy[0]
+            y = line.coords.xy[1]
+            line_points = zip(y,x)
+            folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
+    return folmap
+
 
 def add_extra(folmap):
     folium.LayerControl().add_to(folmap)
@@ -185,3 +252,16 @@ def add_cbar(data,folmap,caption:str='HWM(ft) above NAVD88', vmin=0):
     colormap.add_to(folmap)
 
     return folmap
+
+def box_width(descriptions):
+    width = 120
+    num_columns = find_all(descriptions,'COL width=')
+    for i in num_columns:
+        width += int(descriptions[i:(i+20)].split('"')[1].split('%')[0])
+    return width
+
+def box_height(descriptions):
+    height = 100
+    num_rows = find_all(descriptions,'<TR>')
+    height = height+(len(num_rows)*30)
+    return height
