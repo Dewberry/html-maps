@@ -189,8 +189,7 @@ def add_point_tables(gdf0, folmap, info, name, color:str='red',fillcolor:str='re
                                       color=color,fill_color=fillcolor, fill_opacity=1))
     return folmap
 
-def add_poly_table(gdf0, folmap, info, name, color:str='black', fillcolor:str='black'):
-    sID=name
+def add_poly_table(gdf0, folmap, info, name:list, color:str='black', fillcolor:str='black'):
 
 
     for idx in  gdf0.index:
@@ -199,7 +198,7 @@ def add_poly_table(gdf0, folmap, info, name, color:str='black', fillcolor:str='b
         popup = folium.Popup(iframe)
         style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.6,'fillOpacity': 0.4}
         
-        geojson = folium.GeoJson(gdf0.geometry[idx],name=name,style_function=style_function).add_to(folmap)
+        geojson = folium.GeoJson(gdf0.geometry[idx],name=name[idx],style_function=style_function).add_to(folmap)
         geojson.add_child(popup)
 
     return folmap
