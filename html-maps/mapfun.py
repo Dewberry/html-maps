@@ -205,7 +205,7 @@ def add_poly_table(gdf0, folmap, info, name:list, color:str='black', fillcolor:s
 
     return folmap
 
-def add_multiline(gdf0, folmap, info, name, color:str='blue'):
+def add_multiline(gdf0, folmap, info, name, color:str='blue',fillcolor:str='blue'):
     sID=name
     box = len(info)+1
     for idx in  gdf0.index:
@@ -218,7 +218,9 @@ def add_multiline(gdf0, folmap, info, name, color:str='blue'):
             x = line.coords.xy[0]
             y = line.coords.xy[1]
             line_points = zip(y,x)
-            folium.PolyLine(list(line_points),popup= popup, color=color).add_to(folmap)
+            style_function = lambda x :{'fillColor': fillcolor,'color': color,'opacity':0.6,'fillOpacity': 0.4}
+            geojson = folium.GeoJson(line,name=name[idx],style_function=style_function).add_to(folmap)
+            geojson.add_child(popup)
     return folmap
 
 
@@ -264,5 +266,5 @@ def box_width(descriptions):
 def box_height(descriptions):
     height = 100
     num_rows = find_all(descriptions,'<TR>')
-    height = height+(len(num_rows)*30)
+    height = height+(len(num_rows)*20)
     return height
