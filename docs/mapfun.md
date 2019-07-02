@@ -1,10 +1,10 @@
 # Mapfun
 
-Make interactive, lightweight HTML maps using leaflet.  
+Make interactive, lightweight HTML maps using the python library folium.  
 
 ----
 #### Functions  
-
+   
 *quick_transform(vector, incrs)*  
 >**vector**  : (geopandas.DataFrame) - includes geometry  
 >**crs**     : (string) - projection
