@@ -30,37 +30,37 @@ Make interactive, lightweight HTML maps using the python library folium.
 >**table_description** : (list) - adds descriptions in table format to points  
 >**folmap** : initialized interactive map   
 
-*add_point_popups(gdf0, folmap, info, name, color:str='red',fillcolor:str='red')*    
+*add_point_popups(gdf0, folmap, info, name, color : str = 'red', fillcolor : str = 'red')*  
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for points (not multipoints)  
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - strings that will be added to popups for points
 >**name** : (list) - name values for each point   
 
-*add_line_popups(gdf0, folmap, info, name, color:str='blue')*
+*add_line_popups(gdf0, folmap, info, name, color : str = 'blue')*
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for lines (not multilines)  
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - strings that will be added to popups for lines  
 >**name** : (list) - name values for each line  
 
-*add_poly_popups(gdf0, folmap, info, name, color:str='black', fillcolor:str='black')*
+*add_poly_popups(gdf0, folmap, info, name, color : str = 'black', fillcolor : str = 'black')*
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for polygons   
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - strings that will be added to popups for polygons   
 >**name** : (list) - name values for each polygon      
 
-*add_line_tables(gdf0, folmap, info, name, color:str='blue',fillcolor:str='blue')*
+*add_line_tables(gdf0, folmap, info, name, color : str = 'blue', fillcolor : str = 'blue')*
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for lines (not multilines)  
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - html coded strings to generate html tables   
 >**name** : (list) - name values for each line   
    
-*add_point_tables(gdf0, folmap, info, name, color:str='red',fillcolor:str='red')*
+*add_point_tables(gdf0, folmap, info, name, color : str = 'red', fillcolor : str = 'red')*
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for points (not multipoints)  
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - html coded strings to generate html tables   
 >**name** : (list) - name values for each point   
 
-*add_poly_table(gdf0, folmap, info, name:list, color:str='black', fillcolor:str='black')*
+*add_poly_table(gdf0, folmap, info, name, color : str = 'red', fillcolor : str = 'red')*
 >**gdf0** : (geopandas.DataFrame) - Dataframe that has geometry for polygons    
 >**folmap** : initialized interactive map   
 >**info** : (list of strings) - html coded strings to generate html tables   
