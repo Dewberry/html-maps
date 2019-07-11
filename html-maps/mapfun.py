@@ -257,7 +257,7 @@ def add_cbar(data,folmap,caption:str='HWM(ft) above NAVD88', vmin=0):
     return folmap
 
 def box_width(descriptions):
-    width = 120
+    width = 175
     num_columns = find_all(descriptions,'COL width=')
     for i in num_columns:
         width += int(descriptions[i:(i+20)].split('"')[1].split('%')[0])
