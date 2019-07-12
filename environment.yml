@@ -1,0 +1,16 @@
+name: example
+channels:
+  - https://repo.anaconda.com/pkgs/free
+  - defaults
+dependencies:
+  - fiona=1.8.4
+  - geopandas=0.4.1
+  - matplotlib=3.0.3
+  - numpy=1.16.3
+  - numpy-base=1.16.3
+  - pandas=0.24.2
+  - shapely=1.6.4
+  - pip:
+    - branca==0.3.1
+    - folium==0.8.3
+    - geojson==2.4.1
