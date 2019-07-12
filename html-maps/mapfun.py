@@ -43,17 +43,18 @@ class mapfun:
 					", UPR-EGP, and the GIS User Community"
 		folium.TileLayer(tiles=EsriImagery, attr=EsriAttribution, name=tile_type).add_to(self.map)
 		return self
+		
 	def add_cm_points(self, gdf0:gpd.GeoDataFrame, info:list, name:list, cmap:list, add_table:bool=True):
 		'''
-		 adds points with a color map to a folium map
+		 adds points with colormap to folium map
 		 inputs:
-			latitude:           list of y locations
-			longitude:          list of x locations
-			elevations:         list of z values
+		 	gdf0:				geopandas.GeoDataFrame
+			cmap:				list of colors
 			add_table :         choose if you would like to add a table to points
-			table_description:  adds descriptions in table format 
-								to points
-			folmap:             initialized interactive map 
+			info:  				adds descriptions in table format 
+								to polygons
+			name:				list of the names of the polygons
+ 
 		'''
 
 		if add_table:
@@ -75,18 +76,18 @@ class mapfun:
 											  fill_color=mpl.colors.to_hex(cmap), fill_opacity=1))
 		return self
 
-	def add_point(self, gdf0, info, name, color:str='red',\
+	def add_point(self, gdf0:gpd.GeoDataFrame, info:list, name:list, color:str='red',\
 			fillcolor:str='red',data:list=None,add_table:bool=True):
 		'''
 		 adds points to folium map
 		 inputs:
-			latitude:           list of y locations
-			longitude:          list of x locations
-			elevations:         list of z values
+		 	gdf0:				geopandas.GeoDataFrame
+
 			add_table :         choose if you would like to add a table to points
-			table_description:  adds descriptions in table format 
+			info:  				adds descriptions in table format 
 								to points
-			folmap:             initialized interactive map 
+			name:				list of the names of the points
+ 
 		'''
 		sID=name
 
@@ -115,13 +116,13 @@ class mapfun:
 		'''
 		 adds lines to folium map
 		 inputs:
-			latitude:           list of y locations
-			longitude:          list of x locations
-			elevations:         list of z values
+		 	gdf0:				geopandas.GeoDataFrame
+
 			add_table :         choose if you would like to add a table to points
-			table_description:  adds descriptions in table format 
-								to points
-			folmap:             initialized interactive map 
+			info:  				adds descriptions in table format 
+								to lines
+			name:				list of the names of the lines
+ 
 		'''
 		sID=name
 		if add_table:
@@ -179,15 +180,15 @@ class mapfun:
 	def add_polygon(self, gdf0:gpd.GeoDataFrame, info:list, name:list,\
 				 color:str='black',fillcolor:str='black',add_table:bool=True):
 		'''
-		 adds lines to folium map
+		 adds polygons to folium map
 		 inputs:
-			latitude:           list of y locations
-			longitude:          list of x locations
-			elevations:         list of z values
+		 	gdf0:				geopandas.GeoDataFrame
+
 			add_table :         choose if you would like to add a table to points
-			table_description:  adds descriptions in table format 
-								to points
-			folmap:             initialized interactive map 
+			info:  				adds descriptions in table format 
+								to polygons
+			name:				list of the names of the polygons
+ 
 		'''
 		if add_table:
 
@@ -215,8 +216,10 @@ class mapfun:
 
 #---------- extra attribute functions that support the functions above---------------
 
-def colormap(data, cmap_type:str='jet', vmin=0):
-	# calculates colors based on the data and cmap
+def colormap(data:list, cmap_type:str='jet', vmin=0):
+	'''
+	 calculates colors based on the data and cmap
+	'''
 	cmap = cm.get_cmap(cmap_type)  
 	normalize = mpl.colors.Normalize(vmin=vmin, vmax=max(data))
 	colors = [cmap(normalize(value)) for value in data]
@@ -224,39 +227,56 @@ def colormap(data, cmap_type:str='jet', vmin=0):
 	return colors
 
 def colors():
-	'''tell me'''
+	'''
+	List of colors for branca colorbar
+	needs to be updated 7/12
+	'''
 	colors = ['#8000FF','#5500FF','#4000FF','#1500FF','#0000FF','#002AFF','#0055FF',
 	'#0080FF','#00AAFF','#00D4FF','#00FFFF','#00FFAA','#00FF80','#00FF2A','#2AFF00',
 	'#80FF00','#AAFF00','#D4FF00','#FFFF00','#FFD400','#FFAA00','#FF8000','#FF6A00',
 	'#FF4000','#FF2A00','#FF1500','#FF0000']
 	return colors
 
-def add_cbar(data,folmap,caption:str='HWM(ft) above NAVD88', vmin=0):
-	# adds a colorbar to a folium map
+def add_cbar(data:list,folmap:folium.folium.Map,caption:str='HWM(ft) above NAVD88', vmin=0):
+	'''
+	adds a colorbar to a folium map
+	'''
 	colormap = branca.colormap.StepColormap(colors=colors(),vmin=vmin,vmax=np.max(round(data,1)))
 	colormap.caption = caption
 	colormap.add_to(folmap)
 
 	return folmap
 
-def box_width(descriptions):
+def box_width(descriptions:str):
+	'''
+	automatically sets the width of the html box based on the inputs given
+	'''
 	width = 175
 	num_columns = find_all(descriptions,'COL width=')
 	for i in num_columns:
 		width += int(descriptions[i:(i+20)].split('"')[1].split('%')[0])
 	return width
 
-def box_height(descriptions):
+def box_height(descriptions:str):
+	'''
+	automatically adjusts the height of the html box
+	'''
 	height = 100
 	num_rows = find_all(descriptions,'<TR>')
 	height = height+(len(num_rows)*20)
 	return height
 
 def quick_transform(vector, incrs):
+	'''
+	sets the crs projection for the vector
+	'''
 	vector.crs = incrs
 	return vector.to_crs({'init': 'epsg:4326'})
 
 def get_centroid(vector):
+	'''
+	finds the center points in x,y from a geopandas.GeoDataFrame
+	'''
 	geom = vector.geometry
 	xpoints = [float(v.x) for v in geom]
 	ypoints = [float(v.y) for v in geom]
