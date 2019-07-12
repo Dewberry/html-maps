@@ -16,7 +16,7 @@ from matplotlib import cm
 from folium.plugins import MeasureControl
 
 
-class mapfun:
+class mapfun(object):
 
 	def __init__(self, x:float, y:float, zoom:int=10):
 		self.map = folium.Map(location=[y,x], zoom_start=zoom)

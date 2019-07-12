@@ -1,5 +1,13 @@
-# HTML-Maps
+# html-maps
+
+[Click here for an example html-map](https://htmlpreview.github.io/?https://github.com/Dewberry/html-maps/blob/master/docs/map.html)
+
 ---
+
+![Example_screenshot](docs/images/example_screenshot.PNG)
+
+
+
 ## Description
 HTML maps is a tool that simplifies the development of lightweight and interactive maps utilizing the python visualization library [folium](https://github.com/python-visualization/folium). To generate these interactive maps we are using the Python IDE [jupyter notebooks](https://jupyter.org/) to process geo-spatial data such as:
 1. USGS gauges  
@@ -49,9 +57,3 @@ m.map.save(outfile='map.html')
 [features](docs/features.md)   
 <br>  
 
----  
-
-#### Map Example   
-[Link to Example Map](docs/map.html)    
-
-![Example_screenshot](/docs/images/example_screenshot.PNG)
