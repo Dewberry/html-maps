@@ -1,6 +1,7 @@
 # html-maps
 
-<a href="https://github.com/Dewberry/html-maps/blob/master/docs/map.html" download>Click to Download Example</a>
+
+<a href="https://github.com/Dewberry/html-maps/blob/master/docs" download="map.html"><img src="https://github.com/Dewberry/html-maps/blob/master/docs" /></a>
 ---
 
 ![Example_screenshot](docs/images/example_screenshot.PNG)
