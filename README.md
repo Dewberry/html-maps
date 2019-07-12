@@ -11,9 +11,9 @@ HTML maps is a tool that simplifies the development of lightweight and interacti
 ---
 ## Contents  
 #### Notebooks:  
- * [QuickMap](/notebooks/QuickMap.ipynb)  
- * [QuickMap-PM](/notebooks/QuickMap-PM.ipynb)   
- * [Example](/notebooks/example.ipynb)  - example notebook describing the process of initializing HTML maps
+ * [QuickMap-PM](/notebooks/QuickMap-PM.ipynb) - The control notebook for papermill to auto-generate html maps.
+ * [QuickMap](/notebooks/QuickMap.ipynb)  - Papermill notebook controlled by the QuickMap-PM notebook.
+ * [Example](/notebooks/example.ipynb)  - Example notebook describing the process of initializing HTML maps.
 
 ---
 ## Workflow
@@ -29,9 +29,10 @@ m.add_polygon(polygons, descriptions, name of polygon, add_table=True)
 ```
 m.map.save(outfile='map.html')
 ```
-
-#### Documentation:     
-[Read the Docs](docs/index.md)
+---
+### Documentation       
+[mapfun](docs/mapfun.md)    
+[features](docs/features.md)   
 <br>  
 #### Map Example
 
