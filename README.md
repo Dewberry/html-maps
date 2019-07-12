@@ -1,12 +1,12 @@
 # HTML-Maps
 ---
 ## Description
-HTML maps is a tool that simplifies the development of lightweight and interactive maps utilizing the python visualization library [folium](https://github.com/python-visualization/folium). These interactive maps can be used with any geospatial data such as:
+HTML maps is a tool that simplifies the development of lightweight and interactive maps utilizing the python visualization library [folium](https://github.com/python-visualization/folium). Utilizing ([jupyter notebooks](https://jupyter.org/)) to process and generate these interactive maps with geo-spatial data such as:
 1. USGS gauges  
 2. Hydrologic Model data    
 3. Meteorological data
 
-**note* : Currently these add functions are expecting geopandas.GeoDataFrames 
+**NOTE* : Currently the add functions are expecting to be inputted with geopandas.GeoDataFrames 
 
 ---
 ## Contents  
@@ -15,6 +15,20 @@ HTML maps is a tool that simplifies the development of lightweight and interacti
  * [QuickMap](/notebooks/QuickMap.ipynb)  - Papermill notebook controlled by the QuickMap-PM notebook.
  * [Example](/notebooks/example.ipynb)  - Example notebook describing the process of initializing HTML maps.
 
+#### Html-Maps:
+ * mapfun.py - Library to generate interactive maps.
+ * features.py - Library to auto-generate html tables.  
+ * [HTML.py](http://www.decalage.info/python/html) - Libary developed by Philippe Lagadec to write html tables in python. 
+
+#### Sample data:
+ Contains point, line, and polygon data for use with the example notebook. These data files are in geojson and shapefile.   
+ * sample_gages.geojson  
+ * sample_gages.shp  
+ * sample_lines.geojson  
+ * sample_lines.shp  
+ * sample_polygons.geojson   
+ * sample_polygons.shp   
+ 
 ---
 ## Workflow
 1. Initialize html map by inputting the center of the location (x,y).     
@@ -34,6 +48,10 @@ m.map.save(outfile='map.html')
 [mapfun](docs/mapfun.md)    
 [features](docs/features.md)   
 <br>  
-#### Map Example
+
+---  
+
+#### Map Example   
+[Link to Example Map](map.html)    
 
 ![Example_screenshot](/docs/images/example_screenshot.PNG)
