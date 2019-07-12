@@ -1,7 +1,7 @@
 # HTML-Maps
 ---
 ## Description
-HTML maps is a tool that simplifies the development of lightweight and interactive maps utilizing the python visualization library [folium](https://github.com/python-visualization/folium). Utilizing ([jupyter notebooks](https://jupyter.org/)) to process and generate these interactive maps with geo-spatial data such as:
+HTML maps is a tool that simplifies the development of lightweight and interactive maps utilizing the python visualization library [folium](https://github.com/python-visualization/folium). To generate these interactive maps we are using the Python IDE [jupyter notebooks](https://jupyter.org/) to process geo-spatial data such as:
 1. USGS gauges  
 2. Hydrologic Model data    
 3. Meteorological data
