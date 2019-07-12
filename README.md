@@ -13,6 +13,21 @@ HTML maps is a tool that simplifies the development of lightweight and interacti
  * [QuickMap-PM](/notebooks/QuickMap-PM.ipynb)   
  * [Example](/notebooks/example.ipynb)  - example notebook describing the process of initializing HTML maps
 
+---
+## Workflow
+1. Initialize html map by inputting the center of the location (x,y).     
+```  
+m = mapfun(longitude,latitude)
+```   
+2. Add data to the html map.   
+```
+m.add_polygon(polygons, descriptions, name of polygon, add_table=True)
+```  
+3. Save map.   
+```
+m.map.save(outfile='map.html')
+```
+
 #### Documentation:     
 [Read the Docs](docs/index.md)
 <br>  
