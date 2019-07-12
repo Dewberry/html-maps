@@ -6,7 +6,7 @@ HTML maps is a tool that simplifies the development of lightweight and interacti
 2. Hydrologic Model data    
 3. Meteorological data
 
-**NOTE* : Currently the add functions are expecting to be inputted with geopandas.GeoDataFrames 
+**NOTE* : Currently the add functions are expecting geopandas.GeoDataFrames inputs.  
 
 ---
 ## Contents  
@@ -52,6 +52,6 @@ m.map.save(outfile='map.html')
 ---  
 
 #### Map Example   
-[Link to Example Map](map.html)    
+[Link to Example Map](docs/map.html)    
 
 ![Example_screenshot](/docs/images/example_screenshot.PNG)
