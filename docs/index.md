@@ -1,13 +1,7 @@
 # HTML-Maps
 
-#### Pre-Requisites  
-```
-folium    
-geopandas  
-matplotlib   
-IPython  
-```
-#### Contents
+
+#### Library Contents
 - [mapfun](mapfun.md)
 - [features](features.md)
 

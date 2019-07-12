@@ -6,6 +6,8 @@ HTML maps is a tool that simplifies the development of lightweight and interacti
 2. Hydrologic Model data    
 3. Meteorological data
 
+**note* : Currently these add functions are expecting geopandas.GeoDataFrames 
+
 ---
 ## Contents  
 #### Notebooks:  
