@@ -1,5 +1,7 @@
 # html-maps
 
+[Check out an example here](https://nbviewer.jupyter.org/github/Dewberry/html-maps/blob/master/notebooks/example.ipynb)
+
 ---
 
 ![Example_screenshot](docs/images/example_screenshot.PNG)
