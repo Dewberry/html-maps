@@ -1,5 +1,7 @@
 # html-maps
 
+[![Binder](https://mybinder.org/badge_logo.svg)](https://mybinder.org/v2/gh/Dewberry/html-maps/master)
+
 [Check out an example here](https://nbviewer.jupyter.org/github/Dewberry/html-maps/blob/master/notebooks/example.ipynb)
 
 ---
