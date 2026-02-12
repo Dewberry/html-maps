@@ -1,7 +1,7 @@
 folium	   == 0.8.3
 branca     == 0.3.1
 pandas     == 0.24.2  
-geopandas  == 0.4.1
+geopandas  == 1.1.2
 fiona      == 1.8.4
 shapely    == 1.6.4
 numpy      == 1.16.3
